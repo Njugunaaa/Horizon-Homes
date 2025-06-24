@@ -1,0 +1,1 @@
+export const  API_URL = "https://real-estate-listing-app-7tuz.onrender.com"

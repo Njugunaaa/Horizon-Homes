@@ -1,0 +1,150 @@
+{
+  "properties": [
+    {
+      "id": "2",
+      "title": "Luxury Villa",
+      "location": "Kahawa Sukari",
+      "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "bedrooms": 4,
+      "size": "3200 sqft",
+      "distance": "10km from CBD",
+      "price": "950,000",
+      "type": "House",
+      "description": "A grand luxury villa perfect for large families or hosting guests. Comes with a pool and premium finishes.",
+      "features": [
+        "Swimming Pool",
+        "Spacious Lounge",
+        "Private Balcony",
+        "Master ensuite",
+        "Big windows",
+        "ddd"
+      ]
+    },
+    {
+      "id": "3",
+      "title": "Cozy Apartment",
+      "location": "Ruiru Bypass",
+      "image": "https://images.unsplash.com/photo-1629236714864-0162bbbdaab3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTEyfHxwcm9wZXJ0aWVzJTVDfGVufDB8fDB8fHww",
+      "bedrooms": "2",
+      "size": "900 sqft",
+      "distance": "2km from CBD",
+      "price": "250,000",
+      "type": "Apartment",
+      "description": "A well-located, cozy apartment ideal for singles or couples. Easy access to transport and amenities.",
+      "features": [
+        "Balcony View",
+        "24/7 Security",
+        "Basement Parking",
+        "Nearby Schools"
+      ]
+    },
+    {
+      "id": "4",
+      "title": "Urban Loft",
+      "location": "Muthaiga",
+      "image": "https://plus.unsplash.com/premium_photo-1734545294120-3aa935de792d?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTI1fHxwcm9wZXJ0aWVzJTVDfGVufDB8fDB8fHww",
+      "bedrooms": "1",
+      "size": "650 sqft",
+      "distance": "1km from CBD",
+      "price": "180,000",
+      "type": "Studio",
+      "description": "Stylish loft located in the prestigious Muthaiga area. Suitable for executives or young professionals.",
+      "features": [
+        "Open Plan Layout",
+        "Rooftop Access",
+        "Fitness Center",
+        "Wi-Fi Enabled"
+      ]
+    },
+    {
+      "id": "5",
+      "title": "Country House",
+      "location": "Kiambu Road",
+      "image": "https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=800&q=80",
+      "bedrooms": "4",
+      "size": "2500 sqft",
+      "distance": "15km from CBD",
+      "price": "600,000",
+      "type": "House",
+      "description": "Charming country-style house ideal for a relaxed lifestyle with green spaces and tranquility.",
+      "features": [
+        "Fireplace",
+        "Garden Area",
+        "Tool Shed",
+        "Double Garage"
+      ]
+    },
+    {
+      "id": "6",
+      "title": "SpringVille west",
+      "location": "Mountain View",
+      "image": "https://plus.unsplash.com/premium_photo-1736194025882-1aad786e38ec?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTA5fHxwcm9wZXJ0aWVzJTVDfGVufDB8fDB8fHww",
+      "bedrooms": "4",
+      "size": "2500 sqft",
+      "distance": "15km from CBD",
+      "price": 500000,
+      "type": "House",
+      "description": "This is a beautiful property located near the heart of the city. It offers modern architecture, quality finishes, and comfortable living space. Ideal for families or individuals looking for peace and convenience.",
+      "features": [
+        "Modern Architecture",
+        "Private Garden",
+        "Secure Parking",
+        "24/7 Security"
+      ]
+    },
+    {
+      "id": "266f",
+      "title": "Salvin apartments",
+      "price": 67000000,
+      "location": "Nairobi, KEN",
+      "size": 679,
+      "bedrooms": 3,
+      "distance": "67 from the cbd",
+      "type": "Commercial",
+      "description": "Amazing house",
+      "image": "https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=800&q=80",
+      "features": [
+        "Spacious Living Area",
+        "Garage Parking",
+        "Backyard Garden",
+        "Modern Kitchen"
+      ]
+    },
+    {
+      "id": "d842",
+      "title": "Parkview",
+      "price": 4500009,
+      "location": "juja",
+      "size": 4,
+      "bedrooms": 5,
+      "distance": "ddd",
+      "type": "Villa",
+      "description": "qqqq",
+      "image": "https://images.unsplash.com/photo-1723110994499-df46435aa4b3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvcGVydGllcyU1Q3xlbnwwfHwwfHx8MA%3D%3D",
+      "features": [
+        "Spacious Living Area",
+        "Garage Parking",
+        "Backyard Garden",
+        "Modern Kitchen"
+      ]
+    },
+    {
+      "title": "jjdf",
+      "price": 5454,
+      "location": "cxxc",
+      "size": 4,
+      "bedrooms": 4,
+      "distance": "55u",
+      "type": "House",
+      "description": "weewwe",
+      "image": "https://images.unsplash.com/photo-1723110994499-df46435aa4b3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8cHJvcGVydGllcyU1Q3xlbnwwfHwwfHx8MA%3D%3D",
+      "features": [
+        "Spacious Living Area",
+        "Garage Parking",
+        "Backyard Garden",
+        "Modern Kitchen"
+      ],
+      "id": "xVT8dYu"
+    }
+  ]
+}

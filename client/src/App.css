@@ -1,0 +1,25 @@
+
+
+body {
+    font-family: 'Poppins', sans-serif;
+}
+
+.hero-section {
+    background-color: #E2F4FE;
+}
+
+.hero-search {
+    position: absolute;
+    left: 50%;
+    bottom: -70px;
+    transform: translateX(-50%);
+    width: 100%;
+    z-index: 1;
+}
+
+
+@media (max-width: 991.98px) {
+    .hide-on-mobile {
+      display: none !important;
+    }
+  }
