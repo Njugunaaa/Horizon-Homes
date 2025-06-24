@@ -31,7 +31,7 @@ const NavBar = () => {
             </RouterLink>
           </Nav>
           <span className="navbar-text me-5">
-          <RouterLink to={`/contact-us`}>
+          <RouterLink to={`/login`}>
           <button type="button" className="btn btn-outline-secondary">
               Find a Home
           </button>

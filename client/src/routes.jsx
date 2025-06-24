@@ -6,6 +6,8 @@ import ContactPage from "./pages/ContactPage";
 import AddListingPage from "./pages/AddListingPage";
 import EditListingPage from "./pages/EditListingPage";
 import { ThemeProvider } from "./context/themeContext";
+import Login from "./pages/Auth";
+import LoginForm from "./components/Forms/LoginForm";
 
 
 
@@ -33,6 +35,10 @@ const routes = [
     {
         path: '/contact-us',
         element: <ContactPage/>,
+    },
+     {
+        path: '/login',
+        element: <Login/>,
     },
     {
         path: "/dashboard/add-listing",
