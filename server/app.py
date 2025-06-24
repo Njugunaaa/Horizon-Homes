@@ -5,7 +5,7 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, Listing, Feature, Bookmark
+from models import User, Listing, Bookmark
 
 # ---------------------- User Authentication ---------------------- #
 
@@ -45,12 +45,6 @@ class ListingById(Resource):
     def delete(self, id):
        pass
    
-# ---------------------- FEATURE RESOURCES ---------------------- #
-
-class Features(Resource):
-    def post(self, listing_id):
-        pass
-
 
 # ---------------------- BOOKMARK RESOURCES ---------------------- #
 
@@ -75,8 +69,6 @@ api.add_resource(Logout, '/logout')
 
 api.add_resource(Listings, '/listings')
 api.add_resource(ListingById, '/listings/<int:id>')
-
-api.add_resource(Features, '/listings/<int:listing_id>/features')
 
 api.add_resource(Bookmarks, '/bookmarks')
 api.add_resource(BookmarkById, '/bookmarks/<int:id>')
