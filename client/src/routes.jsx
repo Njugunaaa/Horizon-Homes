@@ -6,7 +6,8 @@ import ContactPage from "./pages/ContactPage";
 import AddListingPage from "./pages/AddListingPage";
 import EditListingPage from "./pages/EditListingPage";
 import { ThemeProvider } from "./context/themeContext";
-import Login from "./pages/Auth";
+import ChooseRole from "./pages/ChooseRole";
+import RegisterForm from "./components/Forms/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm";
 
 
@@ -37,8 +38,16 @@ const routes = [
         element: <ContactPage/>,
     },
      {
-        path: '/login',
-        element: <Login/>,
+        path: "/login",
+        element: <LoginForm />
+    },
+    {
+        path: "/register",
+        element: <RegisterForm />
+    },
+    {
+        path: '/choose-role',
+        element: <ChooseRole/>,
     },
     {
         path: "/dashboard/add-listing",

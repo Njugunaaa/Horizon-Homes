@@ -82,7 +82,7 @@ const AgentDashboard = () => {
         {/* Main content */}
         <div className={`col-md-9 col-lg-10 p-3 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
           <div className="d-flex justify-content-between align-items-center mb-4">
-            <h4 className="fw-bold">Agent Dashboard</h4>
+            <h4 className="fw-bold">Admin Dashboard</h4>
             <div className="d-flex gap-2">
               {/* Toggle Theme Button */}
               <button className="btn btn-dark" onClick={toggleTheme}>

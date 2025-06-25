@@ -156,3 +156,39 @@ a.auth-form-text:hover {
   cursor: pointer;
   margin-left: 5px;
 }
+
+.role-options {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.role-option {
+  font-size: 1.1rem;
+  border: 2px solid #ccc;
+  padding: 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background-color: #f9f9f9;
+}
+
+.role-option input {
+  accent-color: #4070f4;
+  margin-right: 10px;
+}
+
+.role-option:hover {
+  background-color: #eef3ff;
+  border-color: #4070f4;
+}
+
+.role-option.selected {
+  border-color: #4070f4;
+  background-color: #e2ebff;
+  font-weight: 600;
+}
+
