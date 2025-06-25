@@ -12,7 +12,7 @@ const NavBar = () => {
     >
       <Container fluid>
         <Navbar.Brand href="#" className="ms-5 fw-bold">
-          La Maison
+          Horizon Homes
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarText" />
         <Navbar.Collapse id="navbarText">
@@ -27,7 +27,7 @@ const NavBar = () => {
               Contact Us
             </RouterLink>
             <RouterLink to="/dashboard" className="nav-link ms-5">
-              Agent
+              Owner
             </RouterLink>
           </Nav>
           <span className="navbar-text me-5">
