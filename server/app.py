@@ -11,12 +11,56 @@ from models import User, Property, UserProperty, Review
 # ------------------------- Authentication -------------------------
 class Signup(Resource):
     def post(self):
-       pass
+        data = request.get_json()
+        name = data.get('name')
+        email = data.get('email')
+        password = data.get('password')
+        role = data.get('role')  # Owner or user
+
+        if not name or not email or not password or not role:
+            return {'message': 'Email, password, and role are required.'}, 400
+
+        try:
+            new_user = User(name=name, email=email, role=role)
+            new_user.password_hash = password  
+
+            db.session.add(new_user)
+            db.session.commit()
+            session['user_id'] = new_user.id  
+
+            return {'message': 'User created successfully.',
+            'user':{
+                'id': new_user.id,
+                'email': new_user.email,
+                'role': new_user.role }
+            }, 201
+
+        except IntegrityError:
+            return {'error': 'User with this email already exists.'}, 409
 
 
 class Login(Resource):
     def post(self):
-        pass
+        data = request.get_json()
+        email = data.get('email')
+        password = data.get('password')
+        role = data.get('role') 
+
+        if not email or not password:
+            return {'message': 'Email and password are required.'}, 400
+
+        user = User.query.filter_by(email=email).first()
+
+        if user and user.authenticate(password):
+            session['user_id'] = user.id  
+            return {'message': 'Login successful.',
+                    'user': {
+                        'id': user.id,
+                        'email': user.email,
+                        'role': user.role
+                    }}, 200
+        else:
+            return {'error': 'Invalid email or password.'}, 401
 
 
 class Logout(Resource):
