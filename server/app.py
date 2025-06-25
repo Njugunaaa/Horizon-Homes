@@ -65,18 +65,30 @@ class Login(Resource):
 
 class Logout(Resource):
     def delete(self):
-        pass
+        session.clear()
+        return {}, 204
 
 
 class SessionCheck(Resource):
     def get(self):
-        pass
+        user_id = session.get('user_id')
+        if user_id:
+            user = User.query.get(user_id)
+            return user.to_dict(rules=('-user_properties',)), 200
+        return {}, 401
+
 
 
 # ------------------------- Role Setting -------------------------
 class SetRole(Resource):
     def patch(self, user_id):
-        pass
+        data = request.get_json()
+        user = User.query.get(user_id)
+        if user:
+            user.role = data.get("role")
+            db.session.commit()
+            return user.to_dict(rules=('-user_properties',)), 200
+        return {"error": "User not found"}, 404
 
 
 # ------------------------- Properties -------------------------
