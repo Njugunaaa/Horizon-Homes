@@ -41,6 +41,7 @@ class Signup(Resource):
 
 class Login(Resource):
     def post(self):
+
         data = request.get_json()
         email = data.get('email')
         password = data.get('password')
@@ -62,15 +63,34 @@ class Login(Resource):
         else:
             return {'error': 'Invalid email or password.'}, 401
 
+class SessionCheck(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        role = session.get('role')
+
+        if user_id:
+            user = User.query.get(user_id)
+            if user:
+                return {
+                    'message': 'User is logged in.',
+                    'user_id': user.id,
+                    'name': user.name,
+                    'email': user.email,
+                    'role': user.role
+                }, 200
+            else:
+                return {'message': 'User not found.'}, 404
+        else:
+            return {'message': 'Unauthorized'}, 401
+
 
 class Logout(Resource):
     def delete(self):
-        pass
+        session.clear()
+        return {'message': 'Successfully logged out.'}, 204 
 
 
-class SessionCheck(Resource):
-    def get(self):
-        pass
+
 
 
 # ------------------------- Role Setting -------------------------
