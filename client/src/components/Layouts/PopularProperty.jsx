@@ -56,7 +56,7 @@ const PopularProperties = () => {
                             <i className="fas fa-map-marker-alt me-2 text-danger"></i>
                             {property.distance}
                           </p>
-                          <Link to="/properties">
+                          <Link to="/login">
                             <button className="btn btn-dark">View More</button>
                           </Link>
                         </div>
