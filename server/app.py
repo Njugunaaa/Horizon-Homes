@@ -5,73 +5,83 @@ from flask_restful import Resource
 from sqlalchemy.exc import IntegrityError
 
 from config import app, db, api
-from models import User, Listing, Bookmark
+from models import User, Property, UserProperty, Review
 
-# ---------------------- User Authentication ---------------------- #
 
+# ------------------------- Authentication -------------------------
 class Signup(Resource):
     def post(self):
-        pass
+       pass
+
 
 class Login(Resource):
     def post(self):
         pass
 
-class SessionCheck(Resource):
-    def get(self):
-        pass
 
 class Logout(Resource):
     def delete(self):
         pass
 
 
-# ---------------------- LISTING RESOURCES ---------------------- #
-
-class Listings(Resource):
+class SessionCheck(Resource):
     def get(self):
         pass
-    
-    def post(self):
-        pass
-    
-class ListingById(Resource):
-    def get(self, id):
+
+
+# ------------------------- Role Setting -------------------------
+class SetRole(Resource):
+    def patch(self, user_id):
         pass
 
-    def patch(self, id):
-        pass
-    
-    def delete(self, id):
-       pass
-   
 
-# ---------------------- BOOKMARK RESOURCES ---------------------- #
-
-class Bookmarks(Resource):
+# ------------------------- Properties -------------------------
+class PropertyList(Resource):
     def get(self):
-       pass
+        pass
 
     def post(self):
         pass
-    
-class BookmarkById(Resource):
-    def delete(self, id):
+
+
+class PropertyByID(Resource):
+    def patch(self, property_id):
+        pass
+
+    def delete(self, property_id):
         pass
 
 
-# ---------------------- ROUTE REGISTRATION ---------------------- #
+class OwnerProperties(Resource):
+    def get(self, user_id):
+        pass
 
+
+
+# ------------------------- Reviews -------------------------
+class Reviews(Resource):
+    def post(self):
+       pass
+
+
+class PropertyReviews(Resource):
+    def get(self, property_id):
+        pass
+
+
+# ------------------------- Registerd Resources -------------------------
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
-api.add_resource(SessionCheck, '/check_session')
 api.add_resource(Logout, '/logout')
+api.add_resource(SessionCheck, '/check_session')
+api.add_resource(SetRole, '/set_role/<int:user_id>')
 
-api.add_resource(Listings, '/listings')
-api.add_resource(ListingById, '/listings/<int:id>')
+api.add_resource(PropertyList, '/properties')
+api.add_resource(PropertyByID, '/properties/<int:property_id>')
+api.add_resource(OwnerProperties, '/owner/<int:user_id>/properties')
 
-api.add_resource(Bookmarks, '/bookmarks')
-api.add_resource(BookmarkById, '/bookmarks/<int:id>')
+api.add_resource(Reviews, '/reviews')
+api.add_resource(PropertyReviews, '/properties/<int:property_id>/reviews')
 
 
 
