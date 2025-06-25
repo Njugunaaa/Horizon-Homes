@@ -15,10 +15,10 @@ class Signup(Resource):
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        role = data.get('role')  # Owner or user
+        role=""  # role chosen later
 
-        if not name or not email or not password or not role:
-            return {'message': 'Email, password, and role are required.'}, 400
+        if not name or not email or not password :
+            return {'message': 'Email, password are required.'}, 400
 
         try:
             new_user = User(name=name, email=email, role=role)
