@@ -108,7 +108,6 @@ const Listings = () => {
           )}
         </div>
       </section>
-      <Footer />
     </div>
   );
 };

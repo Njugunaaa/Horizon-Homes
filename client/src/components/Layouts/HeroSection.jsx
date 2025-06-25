@@ -48,8 +48,8 @@ const HeroSection = () => {
             </div>
             <div className="col-md-4">
               <i className="fas fa-users fa-2x text-warning mb-2"></i>
-              <h6 className="fw-semibold">Trusted Agents</h6>
-              <p className="text-muted small">Work with highly-rated, professional, and friendly property agents.</p>
+              <h6 className="fw-semibold">Trusted Owners</h6>
+              <p className="text-muted small">Work with highly-rated, professional, and friendly property owners.</p>
             </div>
           </div>
         </div>

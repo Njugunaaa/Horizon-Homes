@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="container">
         <div className="row text-center text-md-start">
           <div className="col-md-3 mb-4">
-            <h5 className="fw-bold mb-3">La Maison</h5>
+            <h5 className="fw-bold mb-3">Horizon Homes</h5>
             <p>
               We help you find the perfect property. Residential or commercial,
               rent or buy — we’ve got you covered.
@@ -24,7 +24,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link
-                  to="/properties"
+                  to="/login"
                   className="text-white text-decoration-none"
                 >
                   Properties
@@ -44,7 +44,7 @@ const Footer = () => {
           <div className="col-md-3 mb-4">
             <h6 className="fw-bold mb-3">Contact Us</h6>
             <p>
-              <i className="fas fa-envelope me-2"></i>info@lamaison.com
+              <i className="fas fa-envelope me-2"></i>info@horizonhomes.com
             </p>
             <p>
               <i className="fas fa-phone me-2"></i>+254 700 000 000
@@ -76,9 +76,9 @@ const Footer = () => {
         <hr className="border-gray" />
 
         <div className="text-center">
-          <p className="mb-0">Powered by La Maison</p>
+          <p className="mb-0">Powered by Horizon Homes</p>
           <small>
-            &copy; {new Date().getFullYear()} La Maison Properties. All rights
+            &copy; {new Date().getFullYear()} Horizon Homes Properties. All rights
             reserved.
           </small>
         </div>
