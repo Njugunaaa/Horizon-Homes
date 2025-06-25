@@ -51,7 +51,7 @@ const routes = [
         element: <RegisterForm />
     },
     {
-        path: '/choose-role',
+        path: '/choose-role/:id',
         element: <ChooseRole/>,
     },
     {

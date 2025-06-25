@@ -1,9 +1,10 @@
-import React from 'react'
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link as RouterLink } from "react-router-dom";
 import "animate.css"
 
 const HomeNavbar = () => {
+
+
   return (
     <div>
     <Navbar
@@ -18,12 +19,7 @@ const HomeNavbar = () => {
         <Navbar.Toggle aria-controls="navbarText" />
         <Navbar.Collapse id="navbarText">
           <Nav className="me-auto mb-2 mb-lg-0 mx-auto">
-            <RouterLink to="/customer-dashboard" className="nav-link ms-5">
-              Customer
-            </RouterLink>
-            <RouterLink to="/dashboard" className="nav-link ms-5">
-              Owner
-            </RouterLink>
+            
           </Nav>
           <span className="navbar-text me-5">
           <RouterLink to={`/login`}>

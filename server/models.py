@@ -33,8 +33,6 @@ class User(db.Model, SerializerMixin):
     
     @validates('name')
     def validate_name(self, key, name):
-        if len(name) < 5:
-            raise ValueError("Username must be at least 5 characters long.")
         existing = User.query.filter_by(name=name).first()
         if existing:
             raise ValueError("Username must be unique.")
@@ -42,9 +40,6 @@ class User(db.Model, SerializerMixin):
     
     @validates('email')
     def validate_email(self, key, email):
-        if '@' not in email or '.' not in email:
-            raise ValueError("Email must contain '@' and '.' to be valid.")
-        
         existing = User.query.filter_by(email=email).first()
         if existing:
             raise ValueError("Email must be unique.")
