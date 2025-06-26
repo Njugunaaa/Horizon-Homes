@@ -225,8 +225,6 @@ class OwnerProperties(Resource):
         properties = [up.property.to_dict() for up in user.user_properties]
         return properties, 200
 
-
-
 # ------------------------- Reviews -------------------------
 class Reviews(Resource):
     def post(self):
