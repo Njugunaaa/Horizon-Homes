@@ -5,12 +5,6 @@ Horizon Homes is a full-stack Real Estate Listing Web Application built with Rea
 
 ---
 
-## 🌐 Live Demo
-
-Coming soon...
-
----
-
 ## 📌 Features
 
 ### 🧑‍💼 User Roles
@@ -38,10 +32,12 @@ Coming soon...
 ---
 
 ## 🛠 Tech Stack
+|------------|------------------------------------------------------------------------------|
+| Frontend   | React, Vite, Bootstrap, Font Awesome, React Router DOM, SweetAlert2         |
+| Backend    | Flask, Flask-Restful, SQLAlchemy, Flask-CORS, bcrypt           |
+| Database   | SQLite (development)                        |
+| Dev Tools  | Postman (API Testing), Git & GitHub                    |
 
-| Frontend | Backend | Database | Tools |
-|----------|---------|----------|-------|
-| React    | Flask   | SQLite   |  EmailJS, SweetAlert2, Toast |
 
 ---
 
@@ -66,7 +62,7 @@ Horizon-Homes/
 
 ---
 
-## 🧪 API Endpoints (Flask)
+## API Endpoints (Flask)
 
 | Endpoint | Method | Description |
 |----------|--------|-------------|
@@ -79,4 +75,79 @@ Horizon-Homes/
 | `/users/<user_id>/properties` | GET | Get properties by owner |
 
 ---
+
+
+## ⚙️ Setup Instructions
+
+### Clone the repo:
+   ```bash 
+   git clone https://github.com/Larr-y1/Horizon-Homes.git
+   cd Horizon-Homes
+   ```
+ ## Backend(Flask)
+
+### 1.Create and activate virtual environment:
+```bash
+python3 -m venv venv
+source venv/bin/activate    # macOS/Linux
+venv\Scripts\activate    # Windows
+```
+
+### 2.Install dependencies using Pipenv (recommended):
+```bash
+pip install pipenv
+pipenv install
+```
+
+### 3.Set environment variables
+```bash
+export FLASK_APP=app.py
+export FLASK_ENV=development
+```
+
+### 4.Run migratios and seed the database
+```bash
+flask db init
+flask db migrate -m "Initial migration"
+flask db upgrade
+python seed.py
+```
+
+### 5.Start the server
+```bash
+cd server
+flask run
+```
+
+## Frontend(React)
+```bash
+cd client
+npm install
+```
+---
+
+## 👨‍💻 Team Members
+This project was collaboratively built by:
+
+- Joshua Gichuhi– Njugunaa
+- Lewis Dickson – @lewisdicksonn@gmail.com
+- Brendah Edward – @b-edward28
+- Michael Ouma - @OumaMichael
+- Jeannette Derek – @Gnett
+- Larry  – @Larr-y1
+
+---
+
+# 📄 License
+This project is licensed under the MIT License.
+
+---
+
+# 🙌 Contributing
+Contributions, issues, and feature requests are welcome!
+Feel free to open an issue or submit a pull request.
+
+---
+
+
 
