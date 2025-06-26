@@ -5,7 +5,17 @@ import { API_URL } from "../constants/utility";
 import axios from "axios";
 import "animate.css";
 import NavBar from "../components/Layouts/NavBar";
-import Footer from "../components/Layouts/Footer";
+
+
+const getValidImageUrl = (rawUrl) => {
+  try {
+    const urlObj = new URL(rawUrl);
+    const actualUrl = urlObj.searchParams.get("imgurl");
+    return actualUrl ? decodeURIComponent(actualUrl) : rawUrl;
+  } catch {
+    return rawUrl;
+  }
+};
 
 const ListingDetails = () => {
   const { id } = useParams(); // grab ID from the URL
@@ -14,10 +24,7 @@ const ListingDetails = () => {
   useEffect(() => {
     const fetchProperty = async () => {
       try {
-        const response = await axios.get(
-          // `http://localhost:3001/properties/${id}`
-          `${API_URL}/api/properties/${id}`
-        );
+        const response = await axios.get(`http://localhost:5555/properties/${id}` );
         setProperty(response.data);
       } catch (error) {
         console.error("Error fetching property:", error);
@@ -35,6 +42,11 @@ const ListingDetails = () => {
     );
   }
 
+  const imageUrl = getValidImageUrl(property.image_url || "");
+  const featuresList = property.features
+    ? property.features.split(",").map(f => f.trim()).filter(f => f !== "")
+    : [];
+
   return (
     <div className="d-flex flex-column min-vh-100">
       <NavBar />
@@ -47,7 +59,7 @@ const ListingDetails = () => {
             <div className="row g-0">
               <div className="col-md-6">
                 <img
-                  src={property.image}
+                  src={imageUrl}
                   className="img-fluid rounded-start"
                   alt={property.title}
                 />
@@ -74,15 +86,19 @@ const ListingDetails = () => {
                   {property.description || "No description available."}
                 </p>
                 <div className="mt-4">
-                  <h5>Features</h5>
-                  <ul className="list-unstyled">
-                    {property.features?.map((feature, index) => (
-                      <li key={index}>
-                        <i className="fas fa-check-circle text-success me-2"></i>
-                        {feature}
-                      </li>
-                    ))}
-                  </ul>
+                  {featuresList.length > 0 && (
+                  <div className="mt-4">
+                    <h5>Features</h5>
+                    <ul className="list-unstyled">
+                      {featuresList.map((feature, index) => (
+                        <li key={index}>
+                          <i className="fas fa-check-circle text-success me-2"></i>
+                          {feature}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
                 </div>
                 <Link
                   to={`/contact-us?property=${encodeURIComponent(
