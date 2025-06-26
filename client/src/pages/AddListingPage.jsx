@@ -1,6 +1,5 @@
 import React from "react";
 import PropertyForm from "../components/Forms/PropertyForm";
-import NavBar from "../components/Layouts/NavBar";
 
 const AddListingPage = () => {
   return (

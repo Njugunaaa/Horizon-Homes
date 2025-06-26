@@ -9,48 +9,55 @@ import { API_URL } from "../../constants/utility";
 
 const PropertyForm = ({ propertyData, isEditing = false }) => {
   const navigate = useNavigate();
-  const { postData } = usePost(`${API_URL}/api/properties`);
+  const { postData } = usePost("http://localhost:5555/properties");
 
-  
-  const [features, setFeatures] = useState([
+  const [features, setFeatures] = useState(() => {
+  if (isEditing && propertyData && typeof propertyData.features === "string") {
+    return propertyData.features.split(",").map(f => f.trim());
+  }
+  return [
     "Spacious Living Area",
     "Garage Parking",
     "Backyard Garden",
     "Modern Kitchen",
-  ]);
-  const [featureInput, setFeatureInput] = useState("");
+  ];
+});
 
-  useEffect(() => {
-    // If editing and propertyData has features, set them
-    if (isEditing && propertyData && propertyData.features) {
-      setFeatures(propertyData.features);
-    }
-  }, [isEditing, propertyData]);
+const [featureInput, setFeatureInput] = useState("");
 
-  const addFeature = () => {
-    const trimmed = featureInput.trim();
-    if (trimmed && !features.includes(trimmed)) {
-      setFeatures([...features, trimmed]);
-      setFeatureInput("");
-    }
-  };
+useEffect(() => {
+  if (isEditing && propertyData && propertyData.features) {
+    const parsedFeatures = typeof propertyData.features === "string"
+      ? propertyData.features.split(",").map(f => f.trim())
+      : propertyData.features;
+    setFeatures(parsedFeatures);
+  }
+}, [isEditing, propertyData]);
 
-  const removeFeature = (index) => {
-    setFeatures(features.filter((_, i) => i !== index));
-  };
+const addFeature = () => {
+  const trimmed = featureInput.trim();
+  if (trimmed && !features.includes(trimmed)) {
+    setFeatures([...features, trimmed]);
+    setFeatureInput("");
+  }
+};
 
-  const handleFeatureKeyDown = (e) => {
-    if (e.key === "Enter") {
-      e.preventDefault();
-      addFeature();
-    }
-  };
+const removeFeature = (index) => {
+  setFeatures(features.filter((_, i) => i !== index));
+};
 
-  // Navigate back to dashboard
+const handleFeatureKeyDown = (e) => {
+  if (e.key === "Enter") {
+    e.preventDefault();
+    addFeature();
+  }
+};
+
+// Navigate back to dashboard
   const handleCancel = () => {
     navigate("/dashboard");
   };
-
+  
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     price: Yup.number().positive("Must be positive").required("Price is required"),
@@ -62,7 +69,7 @@ const PropertyForm = ({ propertyData, isEditing = false }) => {
     ...(isEditing ? {} : {
       size: Yup.number().required("Size is required"),
       distance: Yup.string().required("Distance is required"),
-      image: Yup.string().url("Must be a valid URL").required("Image URL is required"),
+      image_url: Yup.string().url("Must be a valid URL").required("Image URL is required"),
     }),
   });
 
@@ -77,11 +84,12 @@ const PropertyForm = ({ propertyData, isEditing = false }) => {
       distance: "",
       type: "", // Changed from propertyType to type for consistency
       description: "",
-      image: "",
+      image_url: "",
     };
 
     const handleSubmit = async (values) => {
-        const fullData = { ...values, features };
+        // const fullData = { ...values, features };
+        const fullData = { ...values, features: features.join(", ") };
       
         try {
           if (isEditing) {
@@ -242,8 +250,8 @@ const PropertyForm = ({ propertyData, isEditing = false }) => {
                 {!isEditing && (
                   <div className="mb-3">
                     <label className="form-label">Image</label>
-                    <Field name="image" className="form-control" placeholder="Image URL" />
-                    <ErrorMessage name="image" component="div" className="text-danger" />
+                    <Field name="image_url" className="form-control" placeholder="Image URL" />
+                    <ErrorMessage name="image_url" component="div" className="text-danger" />
                   </div>
                 )}
 

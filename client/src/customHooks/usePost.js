@@ -14,6 +14,7 @@ const usePost = (url) => {
     try {
       const res = await axios.post(url, data, {
         headers: { "Content-Type": "application/json" },
+        withCredentials: true,
       });
       setResponse(res.data);
       Swal.fire({

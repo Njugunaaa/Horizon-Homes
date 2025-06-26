@@ -74,11 +74,6 @@ const AgentDashboard = () => {
   return (
     <div className={`container-fluid min-vh-100 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
       <div className="row">
-        {/* Sidebar */}
-        {/* <div className="col-md-3 col-lg-2 p-0" style={{ zIndex: 1 }}>
-          <Sidebar darkMode={darkMode} />
-        </div> */}
-
         {/* Main content */}
         <div className={`col-12 p-3 ${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}>
           <div className="d-flex justify-content-between align-items-center mb-4">
