@@ -94,8 +94,8 @@ const handleFeatureKeyDown = (e) => {
         try {
           if (isEditing) {
             // Update existing property
-            const response = await fetch(`${API_URL}/api/properties/${propertyData.id}`, {
-              method: 'PUT',
+            const response = await fetch(`http://localhost:5555/properties/${propertyData.id}`, {
+              method: 'PATCH',
               headers: {
                 'Content-Type': 'application/json',
               },

@@ -1,9 +1,37 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import { Container, Nav, Navbar } from "react-bootstrap";
-import { Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink, useNavigate } from "react-router-dom";
 import "animate.css";
 
 const NavBar = () => {
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    axios
+      .get("http://localhost:5555/check_session", {
+        withCredentials: true,
+      })
+      .then((res) => {
+        setUser(res.data);
+      })
+      .catch(() => {
+        setUser(null);
+      });
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await axios.delete("http://localhost:5555/logout", {
+        withCredentials: true,
+      });
+      navigate("/");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    }
+  };
+
   return (
     <Navbar
       expand="lg"
@@ -18,18 +46,20 @@ const NavBar = () => {
         <Navbar.Collapse id="navbarText">
           <Nav className="me-auto mb-2 mb-lg-0 mx-auto">
             <RouterLink to="/contact-us" className="nav-link ms-5">
-              Contact Us
+              
             </RouterLink>
           </Nav>
           <span className="navbar-text me-3">
-            <h6 className="mb-0 fw-bold text-dark">👋 Hello, Bill</h6>
+            <h6 className="mb-0 fw-bold text-dark">
+              👋 Hello, {user ? user.name : "Guest"}
+            </h6>
           </span>
           <span className="navbar-text me-5">
-          <RouterLink to={`/`}>
-          <button type="button" className="btn btn-outline-secondary">
+          
+          <button type="button" className="btn btn-outline-secondary" onClick={handleLogout}>
               Logout
           </button>
-            </RouterLink>
+
           </span>
         </Navbar.Collapse>
       </Container>

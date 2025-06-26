@@ -15,7 +15,7 @@ const EditListingPage = () => {
     const fetchProperty = async () => {
       try {
         setLoading(true);
-        const response = await fetch(`${API_URL}/api/properties/${id}`);
+        const response = await fetch(`http://localhost:5555/properties/${id}`);
         if (!response.ok) {
           throw new Error("Failed to fetch property");
         }
