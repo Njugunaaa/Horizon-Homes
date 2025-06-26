@@ -214,8 +214,6 @@ class PropertyByID(Resource):
 
         return {"message": "Home deleted successfully."}, 200
 
-
-
 class OwnerProperties(Resource):
     def get(self, user_id):
         user = User.query.get(user_id)
@@ -225,17 +223,107 @@ class OwnerProperties(Resource):
         properties = [up.property.to_dict() for up in user.user_properties]
         return properties, 200
 
-
-
 # ------------------------- Reviews -------------------------
 class Reviews(Resource):
     def post(self):
-       pass
+        user_id = session.get('user_id')
+        if not user_id:
+            return {"error": "User not authenticated."}, 401
+
+        data = request.get_json()
+        property_id = data.get('property_id')
+        comments = data.get('comments')
+        ratings = data.get('ratings')
+
+        if not property_id or not ratings:
+            return {"error": "Property ID and ratings are required."}, 400
+
+
+        property_obj = Property.query.get(property_id)
+        if not property_obj:
+            return {"error": "Property not found."}, 404
+
+
+        user_property = UserProperty.query.filter_by(
+            user_id=user_id, 
+            property_id=property_id
+        ).first()
+
+        if not user_property:
+            user_property = UserProperty(
+                user_id=user_id, 
+                property_id=property_id,
+                relationship_type='interested'
+            )
+            db.session.add(user_property)
+            db.session.commit()
+
+        existing_review = Review.query.filter_by(user_property_id=user_property.id).first()
+        if existing_review:
+            return {"error": "You have already reviewed this property."}, 409
+
+        try:
+            new_review = Review(
+                comments=comments,
+                ratings=ratings,
+                user_property_id=user_property.id
+            )
+            
+            db.session.add(new_review)
+            db.session.commit()
+
+            return {
+                "message": "Review created successfully.",
+                "review": {
+                    "id": new_review.id,
+                    "comments": new_review.comments,
+                    "ratings": new_review.ratings,
+                    "created_at": new_review.created_at.isoformat(),
+                    "property_id": property_id,
+                    "reviewer_name": user_property.user.name
+                }
+            }, 201
+
+        except ValueError as e:
+            return {"error": str(e)}, 400
+        except Exception as e:
+            db.session.rollback()
+            return {"error": "Failed to create review."}, 500
 
 
 class PropertyReviews(Resource):
     def get(self, property_id):
-        pass
+        property_obj = Property.query.get(property_id)
+        if not property_obj:
+            return {"error": "Property not found."}, 404
+
+
+        reviews = []
+        for user_property in property_obj.user_properties:
+            for review in user_property.reviews:
+                reviews.append({
+                    "id": review.id,
+                    "comments": review.comments,
+                    "ratings": review.ratings,
+                    "created_at": review.created_at.isoformat(),
+                    "updated_at": review.updated_at.isoformat() if hasattr(review, 'updated_at') else None,
+                    "reviewer_name": user_property.user.name,
+                    "reviewer_id": user_property.user.id
+                })
+
+        if reviews:
+            average_rating = sum(review['ratings'] for review in reviews) / len(reviews)
+            average_rating = round(average_rating, 1)
+        else:
+            average_rating = 0
+
+        return {
+            "property_id": property_id,
+            "property_title": property_obj.title,
+            "total_reviews": len(reviews),
+            "average_rating": average_rating,
+            "reviews": reviews
+        }, 200
 
 
 # ------------------------- Registerd Resources -------------------------
@@ -251,8 +339,6 @@ api.add_resource(OwnerProperties, '/owner/<int:user_id>/properties')
 
 api.add_resource(Reviews, '/reviews')
 api.add_resource(PropertyReviews, '/properties/<int:property_id>/reviews')
-
-
 
 if __name__ == '__main__':
     app.run(port=5555, debug=True)
