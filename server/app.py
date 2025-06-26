@@ -118,7 +118,12 @@ class PropertyByID(Resource):
 
 class OwnerProperties(Resource):
     def get(self, user_id):
-        pass
+        user = User.query.get(user_id)
+        if not user:
+            return {'message': 'User not found.'}, 404
+
+        properties = [up.property.to_dict() for up in user.user_properties]
+        return properties, 200
 
 
 
