@@ -116,6 +116,11 @@ class PropertyList(Resource):
 
         if not title or not location or not price:
             return {"error": "Title, location and price are required."}, 400
+        
+        # Get logged-in user (owner)
+        user_id = session.get('user_id')
+        if not user_id:
+            return {"error": "User not authenticated."}, 401
 
         new_home = Property(
             title=title,
@@ -130,6 +135,10 @@ class PropertyList(Resource):
             features=features
         )
         db.session.add(new_home)
+        db.session.commit()
+        
+        user_property = UserProperty(user_id=user_id, property_id=new_home.id)
+        db.session.add(user_property)
         db.session.commit()
 
         return new_home.to_dict(rules=('-user_properties',)), 201
