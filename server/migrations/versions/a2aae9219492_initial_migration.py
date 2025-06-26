@@ -1,8 +1,8 @@
-"""Initial Migration
+"""Initial migration
 
-Revision ID: 80e3a7eb75e4
+Revision ID: a2aae9219492
 Revises: 
-Create Date: 2025-06-25 18:06:47.099868
+Create Date: 2025-06-26 09:47:42.256948
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '80e3a7eb75e4'
+revision = 'a2aae9219492'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -31,6 +31,7 @@ def upgrade():
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('features', sa.String(), nullable=True),
     sa.Column('date_posted', sa.DateTime(), nullable=True),
+    sa.Column('status', sa.String(length=20), nullable=True),
     sa.PrimaryKeyConstraint('id')
     )
     op.create_table('users',
@@ -39,6 +40,8 @@ def upgrade():
     sa.Column('email', sa.String(length=120), nullable=False),
     sa.Column('_password_hash', sa.String(length=128), nullable=False),
     sa.Column('role', sa.String(length=20), nullable=False),
+    sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
     sa.UniqueConstraint('email'),
     sa.UniqueConstraint('name')
@@ -48,6 +51,10 @@ def upgrade():
     sa.Column('user_id', sa.Integer(), nullable=True),
     sa.Column('property_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('relationship_type', sa.String(length=20), nullable=True),
+    sa.Column('start_date', sa.Date(), nullable=True),
+    sa.Column('end_date', sa.Date(), nullable=True),
+    sa.Column('notes', sa.Text(), nullable=True),
     sa.ForeignKeyConstraint(['property_id'], ['properties.id'], name=op.f('fk_user_properties_property_id_properties')),
     sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_user_properties_user_id_users')),
     sa.PrimaryKeyConstraint('id')
@@ -58,6 +65,7 @@ def upgrade():
     sa.Column('ratings', sa.Integer(), nullable=True),
     sa.Column('user_property_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.ForeignKeyConstraint(['user_property_id'], ['user_properties.id'], name=op.f('fk_reviews_user_property_id_user_properties')),
     sa.PrimaryKeyConstraint('id')
     )
