@@ -33,11 +33,11 @@ Horizon Homes is a full-stack Real Estate Listing Web Application built with Rea
 
 ## 🛠 Tech Stack
 ```
-|------------|------------------------------------------------------------------------------|
-| Frontend   | React, Vite, Bootstrap, Font Awesome, React Router DOM, SweetAlert2         |
-| Backend    | Flask, Flask-Restful, SQLAlchemy, Flask-CORS, bcrypt           |
-| Database   | SQLite (development)                        |
-| Dev Tools  | Postman (API Testing), Git & GitHub                    |
+|------------|--------------------------------------------------------------------
+| Frontend   | React, Vite, Bootstrap, Font Awesome, React Router DOM, SweetAlert2         
+| Backend    | Flask, Flask-Restful, SQLAlchemy, Flask-CORS, bcrypt           
+| Database   | SQLite (development)                        
+| Dev Tools  | Postman (API Testing), Git & GitHub                    
 ```
 
 ---
