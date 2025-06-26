@@ -35,11 +35,12 @@ const LoginForm = () => {
       });
 
       if (res.ok) {
-        const user = await res.json();
+        const data = await res.json();
+        const role = data.user.role;
+        
         toast.success("Login successful!");
-
         setTimeout(() => {
-          if (user.role === "owner") {
+          if (role === "owner") {
             navigate("/dashboard");
           } else {
             navigate("/customer-Dashboard");

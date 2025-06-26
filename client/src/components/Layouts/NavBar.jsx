@@ -17,18 +17,15 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="navbarText" />
         <Navbar.Collapse id="navbarText">
           <Nav className="me-auto mb-2 mb-lg-0 mx-auto">
-            <RouterLink to="/" className="nav-link ms-5">
-              Home
-            </RouterLink>
             <RouterLink to="/contact-us" className="nav-link ms-5">
               Contact Us
             </RouterLink>
           </Nav>
           <span className="navbar-text me-3">
-  <h6 className="mb-0 fw-bold text-primary">👋 Hello, Samwel</h6>
-</span>
+            <h6 className="mb-0 fw-bold text-dark">👋 Hello, Bill</h6>
+          </span>
           <span className="navbar-text me-5">
-          <RouterLink to={`/login`}>
+          <RouterLink to={`/`}>
           <button type="button" className="btn btn-outline-secondary">
               Logout
           </button>
