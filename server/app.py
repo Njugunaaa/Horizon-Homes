@@ -15,10 +15,10 @@ class Signup(Resource):
         name = data.get('name')
         email = data.get('email')
         password = data.get('password')
-        role = data.get('role')  # Owner or user
+        role=""  # role chosen later
 
-        if not name or not email or not password or not role:
-            return {'message': 'Email, password, and role are required.'}, 400
+        if not name or not email or not password :
+            return {'message': 'Email, password are required.'}, 400
 
         try:
             new_user = User(name=name, email=email, role=role)
@@ -87,33 +87,133 @@ class SessionCheck(Resource):
 class Logout(Resource):
     def delete(self):
         session.clear()
-        return {'message': 'Successfully logged out.'}, 204 
+        return {}, 204
 
 
-
+class SessionCheck(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        if user_id:
+            user = User.query.get(user_id)
+            return user.to_dict(rules=('-user_properties',)), 200
+        return {}, 401
 
 
 # ------------------------- Role Setting -------------------------
 class SetRole(Resource):
     def patch(self, user_id):
-        pass
+        data = request.get_json()
+        user = User.query.get(user_id)
+        if user:
+            user.role = data.get("role")
+            db.session.commit()
+            return user.to_dict(rules=('-user_properties',)), 200
+        return {"error": "User not found"}, 404
 
 
 # ------------------------- Properties -------------------------
 class PropertyList(Resource):
     def get(self):
-        pass
+        homes = Property.query.all()
+        home_list = []
+        for home in homes:
+            home_list.append(home.to_dict(rules=('-user_properties',)))
+        return home_list, 200
 
     def post(self):
-        pass
+        data = request.get_json()
+
+        title = data.get('title')
+        location = data.get('location')
+        image_url = data.get('image_url')
+        bedrooms = data.get('bedrooms')
+        size = data.get('size')
+        distance = data.get('distance')
+        price = data.get('price')
+        type = data.get('type')
+        description = data.get('description')
+        features = data.get('features')
+
+        if not title or not location or not price:
+            return {"error": "Title, location and price are required."}, 400
+        
+        # Get logged-in user (owner)
+        user_id = session.get('user_id')
+        if not user_id:
+            return {"error": "User not authenticated."}, 401
+
+        new_home = Property(
+            title=title,
+            location=location,
+            image_url=image_url,
+            bedrooms=bedrooms,
+            size=size,
+            distance=distance,
+            price=price,
+            type=type,
+            description=description,
+            features=features
+        )
+        db.session.add(new_home)
+        db.session.commit()
+        
+        user_property = UserProperty(user_id=user_id, property_id=new_home.id)
+        db.session.add(user_property)
+        db.session.commit()
+
+        return new_home.to_dict(rules=('-user_properties',)), 201
 
 
 class PropertyByID(Resource):
+    def get(self, property_id):
+        home = Property.query.get(property_id)
+        if not home:
+            return {"error": "Home not found."}, 404
+        return home.to_dict(rules=('-user_properties',)), 200
     def patch(self, property_id):
-        pass
+        home = Property.query.get(property_id)
+
+        if not home:
+            return {"error": "Home not found."}, 404
+
+        data = request.get_json()
+
+        if 'title' in data:
+            home.title = data['title']
+        if 'location' in data:
+            home.location = data['location']
+        if 'image_url' in data:
+            home.image_url = data['image_url']
+        if 'bedrooms' in data:
+            home.bedrooms = data['bedrooms']
+        if 'size' in data:
+            home.size = data['size']
+        if 'distance' in data:
+            home.distance = data['distance']
+        if 'price' in data:
+            home.price = data['price']
+        if 'type' in data:
+            home.type = data['type']
+        if 'description' in data:
+            home.description = data['description']
+        if 'features' in data:
+            home.features = data['features']
+
+        db.session.commit()
+
+        return home.to_dict(rules=('-user_properties',)), 200
 
     def delete(self, property_id):
-        pass
+        home = Property.query.get(property_id)
+
+        if not home:
+            return {"error": "Home not found."}, 404
+
+        db.session.delete(home)
+        db.session.commit()
+
+        return {"message": "Home deleted successfully."}, 200
+
 
 
 class OwnerProperties(Resource):

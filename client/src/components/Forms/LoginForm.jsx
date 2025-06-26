@@ -1,27 +1,78 @@
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../Auth.css";
-import { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [showPassword, setShowPassword] = useState(false);
   const togglePasswordVisibility = () => setShowPassword(prev => !prev);
 
+  const [formData, setFormData] = useState({
+    email: "",
+    password: ""
+  });
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = formData;
+
+    if (!email || !password) {
+      return toast.error("Please enter both email and password.");
+    }
+
+    try {
+      const res = await fetch("http://localhost:5555/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ email, password }),
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        const role = data.user.role;
+        
+        toast.success("Login successful!");
+        setTimeout(() => {
+          if (role === "owner") {
+            navigate("/dashboard");
+          } else {
+            navigate("/customer-Dashboard");
+          }
+        }, 1500);
+      } else {
+        const err = await res.json();
+        toast.error(err.error || "Login failed. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Server error. Please try again later.");
+    }
+  };
+
+
   return (
     <div className="auth-wrapper">
       <div className="auth-container">
         <div className="form">
           <span className="auth-form-title">Login</span>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="auth-input-field">
-              <input type="text" placeholder="Enter your email" required />
+              <input type="text" placeholder="Enter your email" name="email" value={formData.email} onChange={handleChange} />
               <i className="fas fa-envelope icon"></i>
             </div>
             <div className="auth-input-field">
               <input
                 type={showPassword ? "text" : "password"}
                 placeholder="Enter your password"
-                required
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
               />
               <i className="fas fa-lock icon"></i>
               <i
@@ -57,6 +108,7 @@ const LoginForm = () => {
           </div>
         </div>
       </div>
+      <ToastContainer position="top-right" autoClose={3000} />
     </div>
   );
 };

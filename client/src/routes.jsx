@@ -9,6 +9,7 @@ import { ThemeProvider } from "./context/themeContext";
 import ChooseRole from "./pages/ChooseRole";
 import RegisterForm from "./components/Forms/RegisterForm";
 import LoginForm from "./components/Forms/LoginForm";
+import CustomerDashboard from "./pages/CustomerDashboard";
 
 
 
@@ -24,7 +25,11 @@ const routes = [
             <AgentDashboard />
           </ThemeProvider>
         ),
-      },
+    },
+    {
+        path: '/customer-Dashboard',
+        element: <CustomerDashboard />,
+    },
     {
         path: '/properties',
         element: <Listings />,
@@ -46,7 +51,7 @@ const routes = [
         element: <RegisterForm />
     },
     {
-        path: '/choose-role',
+        path: '/choose-role/:id',
         element: <ChooseRole/>,
     },
     {
