@@ -9,7 +9,6 @@ const ContactPage = () => {
     <div>
         <NavBar/>
         <ContactForm/>
-        <Footer/>
     </div>
   )
 }

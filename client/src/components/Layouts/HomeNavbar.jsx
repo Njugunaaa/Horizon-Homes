@@ -1,10 +1,12 @@
-import React from "react";
 import { Container, Nav, Navbar } from "react-bootstrap";
 import { Link as RouterLink } from "react-router-dom";
-import "animate.css";
+import "animate.css"
 
-const NavBar = () => {
+const HomeNavbar = () => {
+
+
   return (
+    <div>
     <Navbar
       expand="lg"
       fixed="top"
@@ -17,27 +19,20 @@ const NavBar = () => {
         <Navbar.Toggle aria-controls="navbarText" />
         <Navbar.Collapse id="navbarText">
           <Nav className="me-auto mb-2 mb-lg-0 mx-auto">
-            <RouterLink to="/" className="nav-link ms-5">
-              Home
-            </RouterLink>
-            <RouterLink to="/contact-us" className="nav-link ms-5">
-              Contact Us
-            </RouterLink>
+            
           </Nav>
-          <span className="navbar-text me-3">
-  <h6 className="mb-0 fw-bold text-primary">👋 Hello, Samwel</h6>
-</span>
           <span className="navbar-text me-5">
           <RouterLink to={`/login`}>
           <button type="button" className="btn btn-outline-secondary">
-              Logout
+              Find a Home
           </button>
             </RouterLink>
           </span>
         </Navbar.Collapse>
       </Container>
-    </Navbar>
-  );
-};
+    </Navbar> 
+    </div>
+  )
+}
 
-export default NavBar;
+export default HomeNavbar
