@@ -1,135 +1,135 @@
-import React, { useState, useEffect } from "react";
+import  { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import usePost from "../../customHooks/usePost";
-import Swal from "sweetalert2"
-import { API_URL } from "../../constants/utility";
-
+import Swal from "sweetalert2";
 
 const PropertyForm = ({ propertyData, isEditing = false }) => {
   const navigate = useNavigate();
   const { postData } = usePost("http://localhost:5555/properties");
 
   const [features, setFeatures] = useState(() => {
-  if (isEditing && propertyData && typeof propertyData.features === "string") {
-    return propertyData.features.split(",").map(f => f.trim());
-  }
-  return [
-    "Spacious Living Area",
-    "Garage Parking",
-    "Backyard Garden",
-    "Modern Kitchen",
-  ];
-});
+    if (isEditing && propertyData && typeof propertyData.features === "string") {
+      return propertyData.features.split(",").map(f => f.trim());
+    }
+    return [
+      "Spacious Living Area",
+      "Garage Parking",
+      "Backyard Garden",
+      "Modern Kitchen",
+    ];
+  });
 
-const [featureInput, setFeatureInput] = useState("");
+  const [featureInput, setFeatureInput] = useState("");
 
-useEffect(() => {
-  if (isEditing && propertyData && propertyData.features) {
-    const parsedFeatures = typeof propertyData.features === "string"
-      ? propertyData.features.split(",").map(f => f.trim())
-      : propertyData.features;
-    setFeatures(parsedFeatures);
-  }
-}, [isEditing, propertyData]);
+  useEffect(() => {
+    if (isEditing && propertyData && propertyData.features) {
+      const parsedFeatures = typeof propertyData.features === "string"
+        ? propertyData.features.split(",").map(f => f.trim())
+        : propertyData.features;
+      setFeatures(parsedFeatures);
+    }
+  }, [isEditing, propertyData]);
 
-const addFeature = () => {
-  const trimmed = featureInput.trim();
-  if (trimmed && !features.includes(trimmed)) {
-    setFeatures([...features, trimmed]);
-    setFeatureInput("");
-  }
-};
+  const addFeature = () => {
+    const trimmed = featureInput.trim();
+    if (trimmed && !features.includes(trimmed)) {
+      setFeatures([...features, trimmed]);
+      setFeatureInput("");
+    }
+  };
 
-const removeFeature = (index) => {
-  setFeatures(features.filter((_, i) => i !== index));
-};
+  const removeFeature = (index) => {
+    setFeatures(features.filter((_, i) => i !== index));
+  };
 
-const handleFeatureKeyDown = (e) => {
-  if (e.key === "Enter") {
-    e.preventDefault();
-    addFeature();
-  }
-};
+  const handleFeatureKeyDown = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      addFeature();
+    }
+  };
 
-// Navigate back to dashboard
   const handleCancel = () => {
     navigate("/dashboard");
   };
-  
+
   const validationSchema = Yup.object().shape({
     title: Yup.string().required("Title is required"),
     price: Yup.number().positive("Must be positive").required("Price is required"),
-    location: Yup.string().required("Location is required"), // Changed from number to string
+    location: Yup.string().required("Location is required"),
     bedrooms: Yup.number().required("Bedrooms are required"),
     type: Yup.string().required("Property type is required"),
     description: Yup.string().required("Description is required"),
-    // Optional fields for new properties
-    ...(isEditing ? {} : {
-      size: Yup.number().required("Size is required"),
-      distance: Yup.string().required("Distance is required"),
-      image_url: Yup.string().url("Must be a valid URL").required("Image URL is required"),
-    }),
+    size: Yup.number().required("Size is required"),
+    distance: Yup.string().required("Distance is required"),
+    image_url: Yup.string().url("Must be a valid URL").required("Image URL is required"),
   });
 
-  const initialValues = isEditing ? 
-    propertyData : 
-    {
-      title: "",
-      price: "",
-      location: "",
-      size: "",
-      bedrooms: "",
-      distance: "",
-      type: "", // Changed from propertyType to type for consistency
-      description: "",
-      image_url: "",
-    };
-
-    const handleSubmit = async (values) => {
-        // const fullData = { ...values, features };
-        const fullData = { ...values, features: features.join(", ") };
-      
-        try {
-          if (isEditing) {
-            // Update existing property
-            const response = await fetch(`http://localhost:5555/properties/${propertyData.id}`, {
-              method: 'PATCH',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(fullData),
-            });
-      
-            if (!response.ok) {
-              throw new Error('Failed to update property');
-            }
-            Swal.fire({
-              icon: "success",
-              title: "Property Updated!",
-              text: "The property listing has been successfully updated.",
-              timer: 2000,
-              showConfirmButton: false,
-            });
-          } else {
-            // Create new property
-            await postData(fullData); // <-- No need to check response.ok here
-          }
-      
-          // Navigate back to dashboard after successful operation
-          setTimeout(() => {
-            navigate('/dashboard');
-          }, 1500);
-        } catch (err) {
-          Swal.fire({
-            icon: "error",
-            title: "Error",
-            text: err.message || "Something went wrong while saving!",
-          });
-        }
+  const initialValues = isEditing && propertyData
+    ? {
+        title: propertyData.title || "",
+        price: propertyData.price || "",
+        location: propertyData.location || "",
+        size: propertyData.size || "",
+        bedrooms: propertyData.bedrooms || "",
+        distance: propertyData.distance || "",
+        type: propertyData.type || "",
+        description: propertyData.description || "",
+        image_url: propertyData.image_url || "",
+      }
+    : {
+        title: "",
+        price: "",
+        location: "",
+        size: "",
+        bedrooms: "",
+        distance: "",
+        type: "",
+        description: "",
+        image_url: "",
       };
-      
+
+  const handleSubmit = async (values) => {
+    const fullData = { ...values, features: features.join(", ") };
+
+    try {
+      if (isEditing) {
+        const response = await fetch(`http://localhost:5555/properties/${propertyData.id}`, {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(fullData),
+        });
+
+        if (!response.ok) {
+          throw new Error("Failed to update property");
+        }
+
+        Swal.fire({
+          icon: "success",
+          title: "Property Updated!",
+          text: "The property listing has been successfully updated.",
+          timer: 2000,
+          showConfirmButton: false,
+        });
+      } else {
+        await postData(fullData);
+      }
+
+      setTimeout(() => {
+        navigate("/dashboard");
+      }, 1500);
+    } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: err.message || "Something went wrong while saving!",
+      });
+    }
+  };
 
   return (
     <div className="container-fluid py-4">
@@ -168,15 +168,11 @@ const handleFeatureKeyDown = (e) => {
                     <Field name="location" className="form-control" />
                     <ErrorMessage name="location" component="div" className="text-danger" />
                   </div>
-                  
-                  {!isEditing && (
-                    <div className="col-md-4">
-                      <label className="form-label">Size</label>
-                      <Field name="size" type="number" className="form-control" />
-                      <ErrorMessage name="size" component="div" className="text-danger" />
-                    </div>
-                  )}
-                  
+                  <div className="col-md-4">
+                    <label className="form-label">Size</label>
+                    <Field name="size" type="number" className="form-control" />
+                    <ErrorMessage name="size" component="div" className="text-danger" />
+                  </div>
                   <div className="col-md-4">
                     <label className="form-label">Bedrooms</label>
                     <Field name="bedrooms" type="number" className="form-control" />
@@ -184,13 +180,11 @@ const handleFeatureKeyDown = (e) => {
                   </div>
                 </div>
 
-                {!isEditing && (
-                  <div className="mb-3">
-                    <label className="form-label">Distance</label>
-                    <Field name="distance" className="form-control" />
-                    <ErrorMessage name="distance" component="div" className="text-danger" />
-                  </div>
-                )}
+                <div className="mb-3">
+                  <label className="form-label">Distance</label>
+                  <Field name="distance" className="form-control" />
+                  <ErrorMessage name="distance" component="div" className="text-danger" />
+                </div>
 
                 <div className="mb-3">
                   <label className="form-label">Property Type</label>
@@ -247,13 +241,11 @@ const handleFeatureKeyDown = (e) => {
                   <ErrorMessage name="description" component="div" className="text-danger" />
                 </div>
 
-                {!isEditing && (
-                  <div className="mb-3">
-                    <label className="form-label">Image</label>
-                    <Field name="image_url" className="form-control" placeholder="Image URL" />
-                    <ErrorMessage name="image_url" component="div" className="text-danger" />
-                  </div>
-                )}
+                <div className="mb-3">
+                  <label className="form-label">Image</label>
+                  <Field name="image_url" className="form-control" placeholder="Image URL" />
+                  <ErrorMessage name="image_url" component="div" className="text-danger" />
+                </div>
 
                 <div className="d-flex justify-content-end gap-2">
                   <button type="button" className="btn btn-danger" onClick={handleCancel}>
