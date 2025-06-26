@@ -2,12 +2,10 @@ import React, { useEffect, useState } from "react";
 import useFetch from "../customHooks/useFetch";
 import NavBar from "../components/Layouts/NavBar";
 import PropertyCard from "../components/Layouts/PropertyCard";
-import Footer from "../components/Layouts/Footer";
 import SearchBar from "../components/Layouts/SearchBar";
-import { API_URL } from "../constants/utility";
 
 const Listings = () => {
-  const { data: properties, loading} = useFetch(`${API_URL}/api/properties`);
+  const { data: properties, loading} = useFetch("http://localhost:5555/properties");
 
   const [uiLoading, setUiLoading] = useState(true);
   const [filteredProperties, setFilteredProperties] = useState([]);
