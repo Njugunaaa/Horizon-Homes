@@ -7,8 +7,20 @@ from sqlalchemy.exc import IntegrityError
 from config import app, db, api
 from models import User, Property, UserProperty, Review
 
-
 # ------------------------- Authentication -------------------------
+class Users(Resource):
+    def get(self):
+        user_id = session.get('user_id')
+        if not user_id:
+            return {"error": "Unauthorized"}, 401
+
+        user = User.query.get(user_id)
+        if not user:
+            return {"error": "User not found"}, 404
+
+        return {user.to_dict()}, 200
+
+
 class Signup(Resource):
     def post(self):
         data = request.get_json()
@@ -114,6 +126,10 @@ class SetRole(Resource):
 # ------------------------- Properties -------------------------
 class PropertyList(Resource):
     def get(self):
+        # user_id = session.get('user_id')
+        # if not user_id:
+        #     return {"error": "Unauthorized access. Please log in."}, 401
+        
         homes = Property.query.all()
         home_list = []
         for home in homes:
@@ -215,6 +231,7 @@ class PropertyByID(Resource):
         return {"message": "Home deleted successfully."}, 200
 
 class OwnerProperties(Resource):
+    
     def get(self, user_id):
         user = User.query.get(user_id)
         if not user:
@@ -329,6 +346,7 @@ class PropertyReviews(Resource):
 
 
 # ------------------------- Registerd Resources -------------------------
+api.add_resource(Users, '/users')
 api.add_resource(Signup, '/signup')
 api.add_resource(Login, '/login')
 api.add_resource(Logout, '/logout')

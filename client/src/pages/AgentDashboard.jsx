@@ -98,8 +98,8 @@ const AgentDashboard = () => {
 
   if (loading) return <p className="text-center">Loading...</p>;
   if (!user) return <p className="text-center text-danger">Not logged in</p>;
-  if (properties.length === 0)
-    return <p className="text-center">No listings found.</p>;
+  // if (properties.length === 0)
+  //   return <p className="text-center">No listings found.</p>;
 
   return (
   <div>
@@ -161,21 +161,20 @@ const AgentDashboard = () => {
                 arrow: "↑",
               },
               {
-                title: "Average Price",
-                value:
-                  properties.length > 0
-                    ? "Ksh. " +
-                      Math.round(
-                        properties.reduce((sum, p) => sum + p.price, 0) /
-                          properties.length
-                      ).toLocaleString()
-                    : "N/A",
-                change: "",
-                note: "based on your listings",
-                color: "text-info",
-                arrow: "",
-              },
-              {
+                  title: "Total Property Worth",
+                  value:
+                    properties.length > 0
+                      ? "Ksh. " +
+                        properties
+                          .reduce((sum, p) => sum + p.price, 0)
+                          .toLocaleString()
+                      : "N/A",
+                  change: "",
+                  note: "based on your properties",
+                  color: "text-success",
+                  arrow: "",
+                },
+                {
                 title: "Most Common Type",
                 value: (() => {
                   const counts = {};
@@ -188,7 +187,7 @@ const AgentDashboard = () => {
                   return most ? most[0] : "N/A";
                 })(),
                 change: "",
-                note: "in your listings",
+                note: "in your properies",
                 color: "text-primary",
                 arrow: "",
               },
@@ -206,7 +205,7 @@ const AgentDashboard = () => {
                   return top ? top[0] : "N/A";
                 })(),
                 change: "",
-                note: "with most listings",
+                note: "with most properties",
                 color: "text-warning",
                 arrow: "",
               },
